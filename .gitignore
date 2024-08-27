@@ -1,0 +1,5 @@
+.venv/
+.idea/
+config.py
+users.sqlite
+local_settings.py
