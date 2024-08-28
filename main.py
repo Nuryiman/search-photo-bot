@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 from aiogram.client.bot import DefaultBotProperties
 from config import API_TOKEN, API_TOKEN2
-from icrawler.builtin import GoogleImageCrawler
+from icrawler.builtin import GoogleImageCrawler, BingImageCrawler
 from aiogram import Router
 import asyncio
 import shutil
@@ -24,7 +24,7 @@ LOID = 7065054223
 
 
 def crawl_img(query: str, path: str):
-    crawler = GoogleImageCrawler(storage={"root_dir": f"./imgs/{path}"})
+    crawler = BingImageCrawler(storage={"root_dir": f"./imgs/{path}"})
     crawler.crawl(keyword=query, max_num=10)
 
 
