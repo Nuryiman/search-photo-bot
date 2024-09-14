@@ -1,8 +1,10 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 from aiogram.client.bot import DefaultBotProperties
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import StatesGroup, State
 from config import API_TOKEN, API_TOKEN2
-from icrawler.builtin import GoogleImageCrawler, BingImageCrawler
+from icrawler.builtin import GoogleImageCrawler
 from aiogram import Router
 import asyncio
 import shutil
@@ -23,8 +25,12 @@ db = DataBase(db_file="users.sqlite")
 LOID = 7065054223
 
 
+class SearchImg(StatesGroup):
+    waiting_final_search = State()
+
+
 def crawl_img(query: str, path: str):
-    crawler = BingImageCrawler(storage={"root_dir": f"./imgs/{path}"})
+    crawler = GoogleImageCrawler(storage={"root_dir": f"./imgs/{path}"})
     crawler.crawl(keyword=query, max_num=10)
 
 
@@ -85,4 +91,9 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Бот остановлен")
+
+
